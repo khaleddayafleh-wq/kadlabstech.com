@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KADlabs</title>
+<meta name="description" content="KADlabs is an independent studio in Dubai making small, carefully built apps and games. No ads, no tracking, one fair price.">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<meta property="og:title" content="KADlabs">
+<meta property="og:description" content="Small apps and games from Dubai. No ads, no tracking, one fair price.">
+<meta property="og:image" content="assets/pebblefall-feature.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one calm column at 1080px; a cairn of pebbles stacks itself in the hero, the rest stays quiet. */
+:root{
+  --bg:#EDEFEA; --surface:#F8F9F5; --ink:#16202A; --muted:#55606A; --line:#D3D8D0; --accent:#A04C17; --shadow:rgba(22,32,42,.16);
+  --display:"Gabarito", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0C1620; --surface:#132130; --ink:#E8EDF1; --muted:#9DABB8; --line:#22344A; --accent:#F0B26B; --shadow:rgba(0,0,0,.45); color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0C1620; --surface:#132130; --ink:#E8EDF1; --muted:#9DABB8; --line:#22344A; --accent:#F0B26B; --shadow:rgba(0,0,0,.45); color-scheme:dark }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,canvas:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--display);line-height:1.08;margin:0;text-wrap:balance;letter-spacing:-.015em}
+p{margin:0}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* header */
+header{padding-block:22px}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font:800 19px/1 var(--display);letter-spacing:-.01em}
+.brand svg{width:26px;height:26px;flex:none}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:15px}
+nav a:hover{color:var(--ink)}
+
+/* hero */
+.hero{padding-block:clamp(28px,6vw,72px) clamp(40px,7vw,88px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,5vw,64px);align-items:center}
+.hero h1{font-size:clamp(42px,7.2vw,84px);font-weight:800}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lead{margin-top:22px;font-size:clamp(18px,2vw,21px);color:var(--muted);max-width:30em}
+.hero .tags{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font:500 12.5px/1 var(--mono);padding:9px 12px;border:1px solid var(--line);border-radius:999px;color:var(--ink)}
+.cairn{position:relative;aspect-ratio:1/1;width:100%;max-width:440px;justify-self:center}
+.cairn canvas{width:100%;height:100%;display:block;cursor:pointer}
+.cairn small{position:absolute;left:0;right:0;bottom:-6px;text-align:center;font:500 11.5px/1 var(--mono);color:var(--muted);letter-spacing:.06em}
+
+section{padding-block:clamp(48px,7vw,88px);border-top:1px solid var(--line)}
+
+/* Pebblefall */
+.pf-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,5vw,56px);align-items:start}
+.pf-head h2{font-size:clamp(38px,5.4vw,60px);font-weight:800;margin-top:12px}
+.pf-head .desc{margin-top:16px;color:var(--muted);max-width:32em}
+.status{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font:500 13px/1 var(--mono);color:var(--ink)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent)}
+.feature{border-radius:18px;overflow:hidden;box-shadow:0 18px 40px -18px var(--shadow);background:#0E1B2C}
+.feature img{display:block;width:100%;height:auto}
+.spec{margin:28px 0 0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 22px;font-size:15.5px}
+.spec dt{font:500 12px/1.9 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.spec dd{margin:0}
+.shots{margin-top:clamp(32px,5vw,52px);display:grid;grid-auto-flow:column;grid-auto-columns:minmax(170px,1fr);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+.shots figure{margin:0;scroll-snap-align:start;min-width:0}
+.shots img{display:block;width:100%;height:auto;aspect-ratio:9/16;border-radius:16px;background:var(--surface);box-shadow:0 12px 28px -16px var(--shadow)}
+.shots figcaption{margin-top:10px;font-size:14px;color:var(--muted)}
+.shots figcaption b{color:var(--ink);font-weight:700}
+.pf-links{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px 24px;font-size:15.5px}
+
+/* principles */
+.principles h2{font-size:clamp(30px,4vw,42px);font-weight:700;max-width:16em}
+.pgrid{margin-top:36px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,4vw,44px)}
+.pgrid h3{font-size:21px;font-weight:700;display:flex;align-items:center;gap:10px}
+.pgrid h3 span{width:14px;height:11px;border-radius:50%;flex:none}
+.pgrid p{margin-top:10px;color:var(--muted);font-size:16px}
+
+/* about + contact */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,6vw,72px)}
+.split h2{font-size:clamp(28px,3.6vw,38px);font-weight:700;margin-top:12px}
+.split p{margin-top:14px;color:var(--muted);max-width:32em}
+.mailbox{margin-top:20px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.mailbox code{font:500 16px/1.3 var(--mono);color:var(--ink);user-select:all;overflow-wrap:anywhere;min-width:0;flex:1 1 200px}
+.mailbox button{font:700 14px/1 var(--body);padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.mailbox button:hover{border-color:var(--accent)}
+.hint{margin-top:10px;font-size:14px;color:var(--muted)}
+
+footer{border-top:1px solid var(--line);padding-block:26px 40px;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px}
+footer a{color:var(--muted)}
+
+@media (max-width:820px){
+  .hero .wrap,.pf-head,.split{grid-template-columns:minmax(0,1fr)}
+  .cairn{max-width:320px;order:-1}
+  .pgrid{grid-template-columns:minmax(0,1fr)}
+  .shots{grid-auto-columns:minmax(58%,1fr)}
+}
+@media (max-width:480px){ nav{gap:16px} nav a{font-size:14px} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="KADlabs, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="25" rx="12" ry="5.2" fill="currentColor"/><ellipse cx="15" cy="15.6" rx="8.6" ry="4.4" fill="currentColor" opacity=".72"/><ellipse cx="16.6" cy="7.6" rx="5.2" ry="3.4" fill="currentColor" opacity=".48"/></svg>
+      KADlabs
+    </a>
+    <nav aria-label="Main">
+      <a href="#pebblefall">Pebblefall</a>
+      <a href="#how">How we build</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Small apps, <em>built carefully.</em></h1>
+        <p class="lead">KADlabs is an independent studio in Dubai. Each app does one job well, costs one fair price, and keeps your data on your phone.</p>
+        <div class="tags" aria-label="Studio principles">
+          <span class="tag">No ads</span><span class="tag">No tracking</span><span class="tag">Pay once</span><span class="tag">Dubai, UAE</span>
+        </div>
+      </div>
+      <div class="cairn">
+        <canvas id="cairn" tabindex="0" role="img" aria-label="A cairn of five pebbles stacking up. Select it to stack them again."></canvas>
+        <small aria-hidden="true">tap to restack</small>
+      </div>
+    </div>
+  </div>
+
+  <section id="pebblefall">
+    <div class="wrap">
+      <div class="pf-head">
+        <div>
+          <p class="eyebrow">Our first game</p>
+          <h2>Pebblefall</h2>
+          <p class="desc">A calm falling-block puzzle, played pebble by pebble. Classic, Race 40, Zen, Dig, Rising and more modes, a new daily challenge every day, and five hand-tuned themes from Tide to Moss.</p>
+          <p class="status"><i aria-hidden="true"></i>Coming soon to Google Play</p>
+          <dl class="spec">
+            <dt>Price</dt><dd>Free to try every mode. Unlock everything once for $3.99.</dd>
+            <dt>Ads</dt><dd>None, ever.</dd>
+            <dt>Account</dt><dd>Not needed. Plays offline.</dd>
+            <dt>Your data</dt><dd>Stays on your phone. We collect nothing.</dd>
+          </dl>
+        </div>
+        <div class="feature"><img src="assets/pebblefall-feature.jpg" width="1024" height="500" alt="Pebblefall: falling-block puzzles, pebble by pebble. Two phones show the Classic and Rising modes."></div>
+      </div>
+
+      <div class="shots" tabindex="0" aria-label="Pebblefall screenshots">
+        <figure><img src="assets/01_classic_tide.jpg" width="540" height="960" loading="lazy" alt="Classic mode in the Tide theme, with the hold and next pieces beside the board."><figcaption><b>Classic</b> in Tide</figcaption></figure>
+        <figure><img src="assets/02_bigwave_dusk.jpg" width="540" height="960" loading="lazy" alt="A four-line Big Wave clear worth 8,000 points in the Dusk theme."><figcaption><b>Big Wave</b> clear in Dusk</figcaption></figure>
+        <figure><img src="assets/03_twist_fog.jpg" width="540" height="960" loading="lazy" alt="A Twist set-up puzzle in the Fog theme."><figcaption><b>Twist</b> set-ups in Fog</figcaption></figure>
+        <figure><img src="assets/05_rising_moss.jpg" width="540" height="960" loading="lazy" alt="Rising mode in the Moss theme, with rows pushing up from below."><figcaption><b>Rising</b> in Moss</figcaption></figure>
+      </div>
+
+      <p class="pf-links"><a href="pebblefall/privacy/index.html">Pebblefall privacy policy</a><a href="#contact">Get support</a></p>
+    </div>
+  </section>
+
+  <section id="how" class="principles">
+    <div class="wrap">
+      <p class="eyebrow">How we build</p>
+      <h2 style="margin-top:12px">Three rules every KADlabs app follows.</h2>
+      <div class="pgrid">
+        <div><h3><span style="background:#6CC6B8" aria-hidden="true"></span>Pay once, own it</h3><p>Try it free. If you like it, one purchase unlocks everything, restores on a new phone, and never turns into a subscription.</p></div>
+        <div><h3><span style="background:#F2B46D" aria-hidden="true"></span>Your data stays yours</h3><p>No accounts, no analytics, no ad networks. What you do in the app is stored on your device and nowhere else.</p></div>
+        <div><h3><span style="background:#A693D8" aria-hidden="true"></span>Made for everyone</h3><p>Screen readers name every shape, text scales up to 150%, motion and vibration can be turned down, and every control works by touch or keyboard.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">About</p>
+        <h2>One person, a few good apps.</h2>
+        <p>KADlabs is Khaled Dayafleh's studio, based in Dubai, United Arab Emirates. Pebblefall is the first release. More focused apps are in development.</p>
+      </div>
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h2>Questions or support</h2>
+        <p>For help with Pebblefall, a purchase that did not unlock, or anything else, write to:</p>
+        <div class="mailbox">
+          <code id="mail">support@kadlabstech.com</code>
+          <button type="button" id="copyMail">Copy</button>
+          <a href="mailto:support@kadlabstech.com">Open email</a>
+        </div>
+        <p class="hint" id="copyNote" aria-live="polite">Please include your phone model and what happened.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> KADlabs · Dubai, UAE</span>
+    <span><a href="pebblefall/privacy/index.html">Pebblefall privacy policy</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var y = document.getElementById('yr'); if (y) y.textContent = new Date().getFullYear();
+
+  // Copy the support address
+  var btn = document.getElementById('copyMail'), note = document.getElementById('copyNote'), mail = document.getElementById('mail');
+  btn.addEventListener('click', function(){
+    var done = function(){ note.textContent = 'Copied. Paste it into your email app.'; };
+    var fallback = function(){ var r = document.createRange(); r.selectNodeContents(mail); var s = getSelection(); s.removeAllRanges(); s.addRange(r); note.textContent = 'Selected. Copy it with your device’s copy command.'; };
+    try { navigator.clipboard.writeText(mail.textContent).then(done, fallback); } catch(e){ fallback(); }
+  });
+
+  // The cairn: five pebbles drop and settle, one on another
+  var cv = document.getElementById('cairn'), ctx = cv.getContext('2d');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // bottom to top: width, height (as a share of the canvas), x offset, colour
+  var STONES = [
+    {w:.62,h:.19,x:0,    c:'#8DBF7A'},
+    {w:.50,h:.165,x:-.03,c:'#6CC6B8'},
+    {w:.40,h:.15,x:.025, c:'#F2B46D'},
+    {w:.29,h:.13,x:-.015,c:'#E77A66'},
+    {w:.19,h:.11,x:.01,  c:'#A693D8'}
+  ];
+  var size = 0, t0 = 0, raf = 0, K = .8; // K keeps the whole stack inside the frame
+  function fit(){
+    var r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2);
+    size = r.width; cv.width = Math.round(r.width*d); cv.height = Math.round(r.width*d); ctx.setTransform(d,0,0,d,0,0);
+  }
+  function shade(hex, k){ var n=parseInt(hex.slice(1),16), r=n>>16, g=n>>8&255, b=n&255;
+    var f=function(v){ return Math.max(0,Math.min(255,Math.round(k<0? v*(1+k) : v+(255-v)*k))); };
+    return 'rgb('+f(r)+','+f(g)+','+f(b)+')'; }
+  function pebble(cx, cy, w, h, col, squash){
+    var rx = w/2*(1+squash*.08), ry = h/2*(1-squash*.12);
+    ctx.save();
+    ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+    var g = ctx.createLinearGradient(0, cy-ry, 0, cy+ry); g.addColorStop(0, shade(col,.28)); g.addColorStop(.55, col); g.addColorStop(1, shade(col,-.32));
+    ctx.fillStyle = g; ctx.fill();
+    ctx.beginPath(); ctx.ellipse(cx-rx*.32, cy-ry*.42, rx*.34, ry*.2, -.12, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(255,255,255,.32)'; ctx.fill();
+    ctx.restore();
+  }
+  function rests(){ // resting centre y of each stone
+    var out = [], y = size*.86;
+    STONES.forEach(function(s, i){ var h = s.h*K*size; y -= h*(i ? .78 : .5); out.push(y); y -= h*.5; });
+    return out;
+  }
+  function draw(now){
+    ctx.clearRect(0,0,size,size);
+    var shadow = getComputedStyle(document.documentElement).getPropertyValue('--shadow').trim() || 'rgba(0,0,0,.2)';
+    ctx.beginPath(); ctx.ellipse(size/2, size*.885, size*.28, size*.03, 0, 0, Math.PI*2); ctx.fillStyle = shadow; ctx.fill();
+    var ys = rests(), t = now - t0, settled = true;
+    STONES.forEach(function(s, i){
+      var start = i*260, dur = 620, p = reduce ? 1 : Math.max(0, Math.min(1, (t-start)/dur));
+      if (p < 1) settled = false;
+      if (p <= 0) return;
+      // fall with gravity, then a small squash as it lands
+      var fallP = Math.min(1, p/.72), y = -s.h*K*size + (ys[i] + s.h*K*size)*fallP*fallP;
+      var squash = p > .72 ? Math.sin((p-.72)/.28*Math.PI)*(1-p)*3.2 : 0;
+      pebble(size/2 + s.x*K*size, y, s.w*K*size, s.h*K*size, s.c, squash);
+    });
+    if (!settled) raf = requestAnimationFrame(draw);
+  }
+  function play(){ cancelAnimationFrame(raf); t0 = performance.now(); raf = requestAnimationFrame(draw); }
+  fit(); if (reduce) draw(performance.now()); else play();
+  cv.addEventListener('click', play);
+  cv.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); play(); } });
+  var rt; addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(function(){ fit(); t0 = -1e6; draw(performance.now()); }, 120); });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){ t0 = -1e6; draw(performance.now()); });
+})();
+</script>
+</body>
+</html>
